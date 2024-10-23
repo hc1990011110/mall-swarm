@@ -53,6 +53,13 @@ services:
     volumes:
       - ./mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
       - ./mydata/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
+    entrypoint: >
+      sh -c "
+        if [ ! -d '/usr/share/elasticsearch/plugins/ik' ]; then
+          elasticsearch-plugin install --batch https://github.com/infinilabs/analysis-ik/releases/download/v7.17.3/elasticsearch-analysis-ik-7.17.3.zip;
+        fi;
+        exec /usr/local/bin/docker-entrypoint.sh elasticsearch
+      "
     ports:
       - 9200:9200
       - 9300:9300

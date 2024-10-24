@@ -340,5 +340,13 @@
             <url>https://repo1.maven.org/maven2/</url>
         </pluginRepository>
     </pluginRepositories>
-
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.0</version> <!-- 或者尝试3.0.0版本 -->
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

@@ -1,7 +1,6 @@
 services:
   mysql:
     image: mysql:5.7
-    container_name: mysql
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
     environment:
@@ -14,7 +13,6 @@ services:
       - ./mydata/mysql/log:/var/log/mysql #日志文件挂载
   redis:
     image: redis:7
-    container_name: redis
     command: redis-server --appendonly yes
     volumes:
       - ./mydata/redis/data:/data #数据文件挂载
@@ -22,7 +20,6 @@ services:
       - 6379:6379
   nginx:
     image: nginx:1.22
-    container_name: nginx
     volumes:
       - ./mydata/nginx/conf:/etc/nginx #配置文件挂载
       - ./mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
@@ -31,7 +28,6 @@ services:
       - 80:80
   rabbitmq:
     image: rabbitmq:3.9-management
-    container_name: rabbitmq
     volumes:
       - ./mydata/rabbitmq/data:/var/lib/rabbitmq #数据文件挂载
       - ./mydata/rabbitmq/log:/var/log/rabbitmq #日志文件挂载
@@ -44,7 +40,6 @@ services:
         RABBITMQ_DEFAULT_VHOST: /mall             # 创建/mall虚拟主机
   elasticsearch:
     image: elasticsearch:7.17.3
-    container_name: elasticsearch
     user: root
     environment:
       - "cluster.name=elasticsearch" #设置集群名称为elasticsearch
@@ -65,7 +60,6 @@ services:
       - 9300:9300
   logstash:
     image: logstash:7.17.3
-    container_name: logstash
     environment:
       - TZ=Asia/Shanghai
     volumes:
@@ -81,7 +75,6 @@ services:
       - 4563:4563
   kibana:
     image: kibana:7.17.3
-    container_name: kibana
     links:
       - elasticsearch:es #可以用es这个域名访问elasticsearch服务
     depends_on:
@@ -92,14 +85,12 @@ services:
       - 5601:5601
   mongo:
     image: mongo:4
-    container_name: mongo
     volumes:
       - ./mydata/mongo/db:/data/db #数据文件挂载
     ports:
       - 27017:27017
   nacos-registry:
     image: nacos/nacos-server:v2.1.0
-    container_name: nacos-registry
     environment:
       - "MODE=standalone"
     ports:
